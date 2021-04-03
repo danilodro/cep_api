@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca CEP</title>
+</head>
+
+<body>
+
+    <h1> Busca CEP via correios</h1>
+
+    <input id="inputCEP" type="text" placeholder="CEP">
+    <input id="btnBuscar" type="button" value="Buscar">
+
+    <p id="cep"></p>
+    <p id="logradouro"></p>
+    <p id="bairro"></p>
+    <p id="localidade"></p>
+
+    <script>
+        let btnBuscar = document.querySelector('#btnBuscar')
+
+        btnBuscar.addEventListener('click', function() {
+
+            let inputCEP = document.querySelector('#inputCEP').value
+
+            let api = ` http://viacep.com.br/ws/${inputCEP}/json/`
+
+            let request = new XMLHttpRequest()
+
+            request.open('GET', api)
+
+            request.onload = function() {
+
+                let endereco = JSON.parse(request.responseText)
+
+                let cep = document.querySelector('#cep')
+                cep.innerHTML = endereco.cep
+
+                let logradouro = document.querySelector('#logradouro')
+                logradouro.innerHTML = endereco.logradouro
+
+                let bairro = document.querySelector('#bairro')
+                bairro.innerHTML = endereco.bairro
+
+                let localidade = document.querySelector('#localidade')
+                localidade.innerHTML = endereco.localidade
+
+            }
+
+            request.send()
+
+        })
+    </script>
+</body>
+
+</html>
